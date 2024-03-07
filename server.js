@@ -34,20 +34,8 @@ app.use("/*", handleNotFound);
 // error Handler
 app.use(errorHandler);
 
-// app.post(
-//   "/sign-in",
-//   (req, res, next) => {
-//     const { email, password } = req.body;
-//     if (!email || !password)
-//       return res.json({ error: "email/password missing!" });
-//     next();
-//   },
-//   (req, res) => {
-//     res.send("<h1>Hello, About</h1>");
-//   }
-// );
-
 // connecting server
-app.listen(8000, () => {
-  console.log("Server is running on PORT 8000 ");
+const PORT = process.env.PORT || 8000;
+app.listen(PORT, () => {
+  console.log("Server is running on PORT " + PORT);
 });

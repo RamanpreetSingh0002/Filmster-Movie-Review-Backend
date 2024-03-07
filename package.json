@@ -4,7 +4,8 @@
   "description": "This project is for the movie review",
   "main": "server.js",
   "scripts": {
-    "start": "nodemon server.js"
+    "start": "node server.js",
+    "server": "nodemon server.js"
   },
   "author": "Raman and Utkarsh",
   "license": "ISC",
@@ -24,5 +25,9 @@
   },
   "devDependencies": {
     "nodemon": "^3.0.3"
+  },
+  "engines": {
+    "node": "20.x",
+    "npm": "9.x"
   }
 }
