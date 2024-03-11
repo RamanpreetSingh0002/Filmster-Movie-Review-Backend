@@ -14,6 +14,7 @@ const {
   getRelatedMovies,
   getTopRatedMovies,
   searchPublicMovies,
+  getTypeRelatedMovies,
 } = require("../controllers/movie");
 const { parseData } = require("../utils/helper");
 const {
@@ -75,5 +76,6 @@ movieRouter.get("/single/:movieId", getSingleMovie);
 movieRouter.get("/related/:movieId", getRelatedMovies);
 movieRouter.get("/top-rated", getTopRatedMovies);
 movieRouter.get("/search-public", searchPublicMovies);
+movieRouter.get("/type-related", getTypeRelatedMovies);
 
 module.exports = movieRouter;

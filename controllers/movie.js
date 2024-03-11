@@ -4,6 +4,7 @@ const {
   relatedMovieAggregation,
   getAverageRatings,
   topRatedMoviesPipeline,
+  TypeRelatedMoviesPipeline,
 } = require("../utils/helper");
 const cloudinary = require("../cloud");
 const Movie = require("../models/movie");
@@ -549,4 +550,29 @@ exports.searchPublicMovies = async (req, res) => {
   const results = await Promise.all(movies.map(mapMovies));
 
   res.json({ results });
+};
+
+exports.getTypeRelatedMovies = async (req, res) => {
+  const { type, pageNo = 0, limit = 10 } = req.query;
+
+  const movies = await Movie.aggregate(TypeRelatedMoviesPipeline(type))
+    .sort({ createdAt: -1 })
+    .skip(parseInt(pageNo) * parseInt(limit))
+    .limit(parseInt(limit));
+
+  const mapMovies = async m => {
+    const reviews = await getAverageRatings(m._id);
+
+    return {
+      id: m._id,
+      title: m.title,
+      poster: m.poster,
+      responsivePosters: m.responsivePosters,
+      reviews: { ...reviews },
+    };
+  };
+
+  const topRatedMovies = await Promise.all(movies.map(mapMovies));
+
+  res.json({ movies: topRatedMovies });
 };
