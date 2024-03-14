@@ -22,35 +22,44 @@ exports.generateMailTransporter = () =>
     },
   });
 
-exports.sendEmail = async ({ name, email, subject, htmlContent }) => {
-  const defaultClient = SibApiV3Sdk.ApiClient.instance;
-
-  // Configure API key authorization: api-key
-  const apiKey = defaultClient.authentications["api-key"];
-  apiKey.apiKey = process.env.SIB_API_KEY;
-
-  // Uncomment below two lines to configure authorization using: partner-key
-  // const partnerKey = defaultClient.authentications['partner-key'];
-  // partnerKey.apiKey = 'YOUR API KEY';
-
-  const apiInstance = new SibApiV3Sdk.TransactionalEmailsApi();
-
-  const sendSmtpEmail = new SibApiV3Sdk.SendSmtpEmail(); // SendSmtpEmail | Values to send a transactional email
-
-  sendSmtpEmail = {
-    subject: subject,
-    htmlContent: htmlContent,
-    sender: {
-      name: "Filmster Movie Review",
-      email: process.env.OFFICIAL_EMAIL,
+exports.mailTransporter = () =>
+  nodemailer.createTransport({
+    service: "gmail",
+    auth: {
+      user: process.env.OFFICIAL_EMAIL,
+      pass: process.env.MAIL_USER_PASSKEY,
     },
-    to: [
-      {
-        email: email,
-        name: name,
-      },
-    ],
-  };
+  });
 
-  return await apiInstance.sendTransacEmail(sendSmtpEmail);
-};
+// exports.sendEmail = async ({ name, email, subject, htmlContent }) => {
+//   const defaultClient = SibApiV3Sdk.ApiClient.instance;
+
+//   // Configure API key authorization: api-key
+//   const apiKey = defaultClient.authentications["api-key"];
+//   apiKey.apiKey = process.env.SIB_API_KEY;
+
+//   // Uncomment below two lines to configure authorization using: partner-key
+//   // const partnerKey = defaultClient.authentications['partner-key'];
+//   // partnerKey.apiKey = 'YOUR API KEY';
+
+//   const apiInstance = new SibApiV3Sdk.TransactionalEmailsApi();
+
+//   const sendSmtpEmail = new SibApiV3Sdk.SendSmtpEmail(); // SendSmtpEmail | Values to send a transactional email
+
+//   sendSmtpEmail = {
+//     subject: subject,
+//     htmlContent: htmlContent,
+//     sender: {
+//       name: "Filmster Movie Review",
+//       email: process.env.OFFICIAL_EMAIL,
+//     },
+//     to: [
+//       {
+//         email: email,
+//         name: name,
+//       },
+//     ],
+//   };
+
+//   return await apiInstance.sendTransacEmail(sendSmtpEmail);
+// };
