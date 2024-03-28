@@ -199,7 +199,8 @@ exports.forgetPassword = async (req, res) => {
   await newPasswordResetToken.save();
 
   // replace with live server link
-  const resetPasswordUrl = `http://localhost:3000/auth/reset-password?token=${token}&id=${user._id}`;
+  // http://localhost:3000
+  const resetPasswordUrl = `https://filmster.netlify.app/auth/reset-password?token=${token}&id=${user._id}`;
 
   var transport = mailTransporter();
 
